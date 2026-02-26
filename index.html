@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bricks-Repo | Hub</title>
+    <style>
+        :root { --red: #e3000b; --black: #111; --white: #fff; --gray: #f4f4f4; --yellow: #ffdd00; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--gray); color: var(--black); line-height: 1.6; }
+        
+        header { background: var(--black); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
+        .lang-btn { background: none; border: 1px solid #444; color: white; cursor: pointer; padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; margin-left: 5px; }
+        .lang-btn:hover { border-color: var(--red); }
+
+        .hero { background: var(--black); color: white; padding: 80px 20px; text-align: center; border-bottom: 5px solid var(--red); }
+        .hero h1 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; line-height: 1; }
+        .hero p { opacity: 0.8; font-size: 1.2rem; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .container { max-width: 1100px; margin: -50px auto 60px; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: all 0.3s ease; border-top: 6px solid transparent; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-10px); border-top-color: var(--red); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .card h3 { margin: 0 0 12px 0; font-size: 1.5rem; }
+        .card p { font-size: 1rem; color: #555; flex-grow: 1; margin-bottom: 20px; }
+        .status { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--red); padding: 4px 0; border-top: 1px solid #eee; }
+
+        .suggestion-box { background: white; border: 2px dashed #ccc; padding: 40px; border-radius: 20px; text-align: center; margin-top: 50px; }
+        .btn-suggest { display: inline-block; background: var(--black); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; }
+        .btn-suggest:hover { background: var(--red); }
+
+        .support-section { text-align: center; padding: 60px 20px; background: #eee; border-radius: 30px; margin: 40px 20px; }
+        .btn-coffee { display: inline-block; background: var(--yellow); color: black; padding: 18px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 2px solid black; box-shadow: 0 4px 0 black; transition: 0.2s; font-size: 1.1rem; }
+        .btn-coffee:hover { transform: translateY(-2px); box-shadow: 0 6px 0 black; }
+
+        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">BRICKS-REPO</div>
+    <div class="lang-switch">
+        <button class="lang-btn" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('ua')">Українська</button>
+    </div>
+</header>
+
+<section class="hero">
+    <h1 id="h-title">Bricks-Repo Hub</h1>
+    <p id="h-subtitle">Professional tools and digital archives for LEGO® enthusiasts.</p>
+</section>
+
+<div class="container">
+    <div class="grid">
+        <a href="/calc/" class="card">
+            <h3 id="c1-t">Bricks-to-Weight</h3>
+            <p id="c1-d">The fastest way to estimate part count in bulk LEGO by weight. No registration required.</p>
+            <span class="status" id="s-online">Live</span>
+        </a>
+
+        <a href="/video/" class="card">
+            <h3 id="c2-t">Video Instructions</h3>
+            <p id="c2-d">Step-by-step building guides and archives. Find instructions by set number.</p>
+            <span class="status" id="s-soon">In Progress</span>
+        </a>
+
+        <a href="/parts/" class="card">
+            <h3 id="c3-t">Missing Part Finder</h3>
+            <p id="c3-d">Connect with BrickLink and LEGO Shop to find exactly what you need.</p>
+            <span class="status" id="s-soon2">Coming Soon</span>
+        </a>
+    </div>
+
+    <div class="suggestion-box">
+        <h3 id="f-title">💡 Have an idea?</h3>
+        <p id="f-desc">Tell us what LEGO tool we should build next. We listen to our community!</p>
+        <a href="ТУТ_ВАШЕ_ПОСИЛАННЯ_НА_GOOGLE_ФОРМУ" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
+    </div>
+</div>
+
+<div class="support-section">
+    <h3 id="sup-t">Support the Project</h3>
+    <p id="sup-d">Bricks-Repo is free and community-funded. Your support keeps us online!</p>
+    <a href="https://buymeacoffee.com/YOUR_USER" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee / Patreon</a>
+</div>
+
+<footer>
+    <p>© 2026 Bricks-Repo | Independent LEGO® Resource</p>
+</footer>
+
+<script>
+    const i18n = {
+        en: {
+            'h-title': "Bricks-Repo Hub",
+            'h-subtitle': "Professional tools and digital archives for LEGO® enthusiasts.",
+            'c1-t': "Bricks-to-Weight",
+            'c1-d': "The fastest way to estimate part count in bulk LEGO by weight. No registration required.",
+            'c2-t': "Video Instructions",
+            'c2-d': "Step-by-step building guides and archives. Find instructions by set number.",
+            'c3-t': "Missing Part Finder",
+            'c3-d': "Connect with BrickLink and LEGO Shop to find exactly what you need.",
+            's-online': "Live", 's-soon': "In Progress", 's-soon2': "Coming Soon",
+            'f-title': "💡 Have an idea?",
+            'f-desc': "Tell us what LEGO tool we should build next. We listen to our community!",
+            'btn-suggest': "Send Suggestion",
+            'sup-t': "Support the Project",
+            'sup-d': "Bricks-Repo is free and community-funded. Your support keeps us online!",
+            'btn-support': "☕ Buy Me a Coffee / Patreon"
+        },
+        ua: {
+            'h-title': "Хаб Bricks-Repo",
+            'h-subtitle': "Професійні інструменти та цифрові архіви для фанатів LEGO®.",
+            'c1-t': "Калькулятор ваги",
+            'c1-d': "Найшвидший спосіб оцінити кількість деталей за вагою. Без реєстрації.",
+            'c2-t': "Відео-інструкції",
+            'c2-d': "Покрокові гайди та архіви. Пошук інструкцій за номером набору.",
+            'c3-t': "Пошук деталей",
+            'c3-d': "Зв'язок з BrickLink та LEGO Shop для пошуку необхідних елементів.",
+            's-online': "Працює", 's-soon': "В розробці", 's-soon2': "Незабаром",
+            'f-title': "💡 Маєте ідею?",
+            'f-desc': "Напишіть нам, який інструмент створити наступним. Ми слухаємо спільноту!",
+            'btn-suggest': "Надіслати пропозицію",
+            'sup-t': "Підтримати проект",
+            'sup-d': "Bricks-Repo — це безкоштовний ресурс, що фінансується спільнотою.",
+            'btn-support': "☕ Buy Me a Coffee / Patreon"
+        }
+    };
+
+    function setLang(lang) {
+        for (let id in i18n[lang]) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = i18n[lang][id];
+        }
+        localStorage.setItem('bricks_lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('bricks_lang') || (navigator.language.includes('uk') ? 'ua' : 'en');
+    setLang(savedLang);
+</script>
+
+</body>
+</html>
