@@ -3,156 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bricks-Repo | Hub</title>
+    <title>Bricks-Repo | Professional LEGO® Tools</title>
     
-    <script src="config.bricks.js"></script>
-
+    <script src="config.bricks.js" defer></script>
+    
     <style>
-        :root { 
-            --red: #e3000b; 
-            --black: #111; 
-            --white: #fff; 
-            --gray: #f4f4f4; 
-            --yellow: #ffdd00; 
+        :root {
+            --primary: #e3000b; --secondary: #ffdd00; --bg: #f0f2f5; --text: #1a1a1a;
+            --radius-lg: 32px; --radius-md: 20px;
+            --shadow-soft: 0 20px 40px rgba(0,0,0,0.06);
+            --shadow-hover: 0 30px 60px rgba(0,0,0,0.12);
         }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--gray); color: var(--black); line-height: 1.6; }
+
+        body { 
+            font-family: 'SF Pro Display', system-ui, -apple-system, sans-serif; 
+            margin: 0; background: var(--bg); color: var(--text); line-height: 1.6;
+            background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Modern Glass Header */
+        header { 
+            background: rgba(26, 26, 26, 0.9); padding: 20px 40px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo { color: white; font-weight: 900; font-size: 1.4rem; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary); }
+
+        .lang-btn { 
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); 
+            color: white; cursor: pointer; padding: 8px 16px; border-radius: 12px; 
+            font-weight: 600; font-size: 0.85rem; transition: 0.2s;
+        }
+        .lang-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+
+        /* Hero Section with Depth */
+        .hero { 
+            background: #1a1a1a; color: white; padding: 120px 20px 160px; text-align: center; 
+            position: relative; overflow: hidden;
+        }
+        .hero h1 { font-size: 4rem; margin: 0; letter-spacing: -3px; font-weight: 900; line-height: 0.9; }
+        .hero p { opacity: 0.6; font-size: 1.3rem; margin: 25px auto 0; max-width: 600px; font-weight: 400; }
+        .hero::after {
+            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to top, var(--bg), transparent);
+        }
+
+        /* Grid System */
+        .container { max-width: 1200px; margin: -80px auto 60px; padding: 0 30px; position: relative; z-index: 10; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         
-        header { background: var(--black); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
-        .lang-btn { background: none; border: 1px solid #444; color: white; cursor: pointer; padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; margin-left: 5px; }
-        .lang-btn:hover { border-color: var(--red); }
-
-        .hero { background: var(--black); color: white; padding: 80px 20px; text-align: center; border-bottom: 5px solid var(--red); }
-        .hero h1 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; line-height: 1; }
-        .hero p { opacity: 0.8; font-size: 1.2rem; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto; }
-
-        .container { max-width: 1100px; margin: -50px auto 60px; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        /* Premium Card Design */
+        .card { 
+            background: rgba(255,255,255,0.9); padding: 40px; border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft); text-decoration: none; color: inherit; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; min-height: 220px;
+        }
+        .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-hover); border-color: var(--primary); }
+        .card h3 { margin: 0 0 15px 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .card p { font-size: 1.05rem; color: #555; margin-bottom: 25px; flex-grow: 1; opacity: 0.8; }
         
-        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: all 0.3s ease; border-top: 6px solid transparent; display: flex; flex-direction: column; position: relative; overflow: hidden; height: 100%; box-sizing: border-box; }
-        .card:hover { transform: translateY(-10px); border-top-color: var(--red); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
-        .card h3 { margin: 0 0 12px 0; font-size: 1.5rem; }
-        .card p { font-size: 1rem; color: #555; flex-grow: 1; margin-bottom: 20px; }
-        .status { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--red); padding: 4px 0; border-top: 1px solid #eee; margin-top: auto; }
+        .status { 
+            display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
+            letter-spacing: 1.5px; color: var(--primary); background: rgba(227, 0, 11, 0.05);
+            padding: 6px 12px; border-radius: 8px; align-self: flex-start;
+        }
 
-        .suggestion-box { background: white; border: 2px dashed #ccc; padding: 40px; border-radius: 20px; text-align: center; margin-top: 50px; }
-        .btn-suggest { display: inline-block; background: var(--black); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; }
-        .btn-suggest:hover { background: var(--red); }
+        /* Modern Suggestion Box */
+        .suggestion-box { 
+            background: #ffffff; padding: 60px; border-radius: var(--radius-lg); 
+            text-align: center; margin-top: 60px; border: 2px dashed #ddd; transition: 0.3s;
+        }
+        .suggestion-box:hover { border-color: var(--primary); background: #fafafa; }
+        .btn-suggest { 
+            display: inline-block; background: var(--text); color: white; padding: 16px 35px; 
+            border-radius: 16px; text-decoration: none; font-weight: 700; margin-top: 20px; transition: 0.2s;
+        }
+        .btn-suggest:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(227, 0, 11, 0.2); }
 
-        .support-section { text-align: center; padding: 60px 20px; background: #eee; border-radius: 30px; margin: 40px 20px; }
-        .btn-coffee { display: inline-block; background: var(--yellow); color: black; padding: 18px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 2px solid black; box-shadow: 0 4px 0 black; transition: 0.2s; font-size: 1.1rem; }
-        .btn-coffee:hover { transform: translateY(-2px); box-shadow: 0 6px 0 black; }
+        /* Support Section */
+        .support-section { text-align: center; padding: 80px 20px; background: white; border-radius: 40px; margin: 60px 30px; box-shadow: var(--shadow-soft); }
+        .btn-coffee { 
+            display: inline-flex; align-items: center; gap: 12px; background: var(--secondary); 
+            color: black; padding: 20px 45px; border-radius: 20px; text-decoration: none; 
+            font-weight: 800; transition: 0.3s; font-size: 1.2rem; box-shadow: 0 8px 25px rgba(255, 221, 0, 0.3);
+        }
+        .btn-coffee:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(255, 221, 0, 0.4); }
 
-        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
+        footer { text-align: center; padding: 60px; color: #aaa; font-size: 0.9rem; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .container { margin-top: -60px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">BRICKS-REPO</div>
+    <div class="logo">BRICKS<span>-</span>REPO</div>
     <div class="lang-switch">
-        <button class="lang-btn" onclick="setLang('en')">English</button>
-        <button class="lang-btn" onclick="setLang('ua')">Українська</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('ua')">UA</button>
     </div>
 </header>
 
-<section class="hero">
-    <h1 id="h-title">Bricks-Repo Hub</h1>
-    <p id="h-subtitle">Professional tools and digital archives for LEGO® enthusiasts.</p>
-</section>
+<main>
+    <section class="hero">
+        <h1 id="h-title">Bricks Repo</h1>
+        <p id="h-subtitle">Professional tools for LEGO® collectors.</p>
+    </section>
 
-<div class="container">
-    <div class="grid" id="project-grid"></div>
+    <div class="container">
+        <div class="grid" id="project-grid">
+            </div>
 
-    <div class="suggestion-box">
-        <h3 id="f-title">💡 Have an idea?</h3>
-        <p id="f-desc">Tell us what LEGO tool we should build next.</p>
-        <a href="#" target="_blank" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
+        <div class="suggestion-box">
+            <h3 id="f-title">💡 Have an idea?</h3>
+            <p id="f-desc">Tell us what tool we should build next.</p>
+            <a href="#" target="_blank" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
+        </div>
     </div>
-</div>
 
-<div class="support-section">
-    <h3 id="sup-t">Support the Project</h3>
-    <p id="sup-d">Bricks-Repo is free and community-funded.</p>
-    <a href="#" target="_blank" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee</a>
-</div>
+    <section class="support-section">
+        <h3 id="sup-t">Support the Project</h3>
+        <p id="sup-d">Free and community-funded tools.</p>
+        <a href="#" target="_blank" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee</a>
+    </section>
+</main>
 
 <footer>
-    <p>© 2026 Bricks-Repo | Independent LEGO® Resource</p>
+    <p>© 2026 ProfitRepo | Bricks Branch | Independent Resource</p>
 </footer>
 
 <script>
-    /** * 1. Глобальні налаштування з CONFIG
-     * Встановлюємо Favicon та посилання з центрального файлу конфігурації
-     */
-    function initGlobalSettings() {
-        if (typeof CONFIG !== 'undefined') {
-            // Встановлення Favicon
-            const link = document.createElement('link');
-            link.rel = 'icon';
-            link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${CONFIG.style.favicon}</text></svg>`;
-            document.head.appendChild(link);
-
-            // Встановлення системних посилань (Affiliate/Support)
-            const suggestBtn = document.getElementById('btn-suggest');
-            const supportBtn = document.getElementById('btn-support');
-            if (suggestBtn) suggestBtn.href = CONFIG.suggestion_url;
-            if (supportBtn) supportBtn.href = CONFIG.support_url;
-            
-            console.log(`[ProfitRepo] Branch: ${CONFIG.branch} v.${CONFIG.version} loaded.`);
-        } else {
-            console.warn("[ProfitRepo] config.bricks.js not found. Using defaults.");
-        }
-    }
-
     const i18n = {
         en: {
-            'h-title': "Bricks-Repo Hub",
+            'h-title': "Bricks Repo",
             'h-subtitle': "Professional tools and digital archives for LEGO® enthusiasts.",
             'f-title': "💡 Have an idea?",
-            'f-desc': "Tell us what LEGO tool we should build next. We listen to our community!",
+            'f-desc': "Tell us what LEGO tool we should build next. We listen!",
             'btn-suggest': "Send Suggestion",
-            'sup-t': "Support the Project",
+            'sup-t': "Support Project",
             'sup-d': "Bricks-Repo is free and community-funded. Your support keeps us online!",
-            'btn-support': "☕ Buy Me a Coffee / Patreon"
+            'btn-support': "☕ Buy Me a Coffee"
         },
         ua: {
             'h-title': "Хаб Bricks-Repo",
             'h-subtitle': "Професійні інструменти та цифрові архіви для фанатів LEGO®.",
             'f-title': "💡 Маєте ідею?",
-            'f-desc': "Напишіть нам, який інструмент створити наступним. Ми слухаємо спільноту!",
+            'f-desc': "Напишіть нам, який інструмент створити наступним.",
             'btn-suggest': "Надіслати пропозицію",
             'sup-t': "Підтримати проект",
             'sup-d': "Bricks-Repo — це безкоштовний ресурс, що фінансується спільнотою.",
-            'btn-support': "☕ Buy Me a Coffee / Patreon"
+            'btn-support': "☕ Підтримати проект"
         }
     };
 
-    let currentLang = localStorage.getItem('bricks_lang') || (navigator.language.includes('uk') ? 'ua' : 'en');
-    const grid = document.getElementById('project-grid');
+    let currentLang = localStorage.getItem('bricks_lang') || 'en';
 
-    /** * 2. Завантаження проектів з локального реєстру
-     */
-    async function loadHub() {
-        try {
-            const response = await fetch('hub-registry.json');
-            if (!response.ok) throw new Error("Registry file missing");
-            const data = await response.json();
-            renderCards(data.projects);
-        } catch (e) {
-            console.error("Error loading registry:", e);
-            grid.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>Registry offline. Check hub-registry.json</p>";
+    function initGlobalSettings() {
+        if (typeof CONFIG !== 'undefined') {
+            const root = document.documentElement.style;
+            root.setProperty('--primary', CONFIG.style.colors.primary);
+            root.setProperty('--secondary', CONFIG.style.colors.secondary);
+            
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${CONFIG.style.favicon}</text></svg>`;
+            document.head.appendChild(link);
+
+            document.getElementById('btn-suggest').href = CONFIG.urls.suggestion;
+            document.getElementById('btn-support').href = CONFIG.urls.support;
         }
     }
 
-    /** * 3. Рендеринг карток проектів
-     */
+    async function loadHub() {
+        try {
+            const response = await fetch('hub-registry.json');
+            const data = await response.json();
+            renderCards(data.projects);
+        } catch (e) {
+            document.getElementById('project-grid').innerHTML = "<p>Error loading tools.</p>";
+        }
+    }
+
     function renderCards(projects) {
+        const grid = document.getElementById('project-grid');
         grid.innerHTML = ''; 
         projects.forEach(p => {
-            // Відображаємо лише активні проекти (is_active: true)
-            if (p.is_active === false) return;
-
+            if (!p.is_active) return;
             const title = currentLang === 'ua' ? p.title_ua : p.title_en;
             const desc = currentLang === 'ua' ? p.desc_ua : p.desc_en;
             const status = currentLang === 'ua' ? p.status_ua : p.status_en;
@@ -161,33 +206,29 @@
             card.href = p.url;
             card.className = 'card';
             card.innerHTML = `
+                <span class="status">${status}</span>
                 <h3>${title}</h3>
                 <p>${desc}</p>
-                <span class="status">${status}</span>
+                <div style="font-weight:bold; color:var(--primary); font-size:0.9rem;">Open Tool →</div>
             `;
             grid.appendChild(card);
         });
     }
 
-    /** * 4. Зміна мови (i18n)
-     */
     function setLang(lang) {
         currentLang = lang;
         localStorage.setItem('bricks_lang', lang);
-        
-        // Оновлення статичних текстів
         for (let id in i18n[lang]) {
             const el = document.getElementById(id);
             if (el) el.innerText = i18n[lang][id];
         }
-        
-        // Оновлення карток (якщо реєстр завантажений)
         loadHub(); 
     }
 
-    // Старт
-    initGlobalSettings();
-    setLang(currentLang);
+    document.addEventListener('DOMContentLoaded', () => {
+        initGlobalSettings();
+        setLang(currentLang);
+    });
 </script>
 
 </body>
