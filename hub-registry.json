@@ -1,0 +1,37 @@
+{
+  "projects": [
+    {
+      "id": "c1",
+      "title_en": "Bricks-to-Weight",
+      "title_ua": "Калькулятор ваги",
+      "desc_en": "The fastest way to estimate part count in bulk LEGO by weight. No registration required.",
+      "desc_ua": "Найшвидший спосіб оцінити кількість деталей за вагою. Без реєстрації.",
+      "url": "/calc/",
+      "status_en": "Live",
+      "status_ua": "Працює",
+      "is_active": true
+    },
+    {
+      "id": "c2",
+      "title_en": "Video Instructions",
+      "title_ua": "Відео-інструкції",
+      "desc_en": "Step-by-step building guides and archives. Find instructions by set number.",
+      "desc_ua": "Покрокові гайди та архіви. Пошук інструкцій за номером набору.",
+      "url": "/video/",
+      "status_en": "In Progress",
+      "status_ua": "В розробці",
+      "is_active": false
+    },
+    {
+      "id": "c3",
+      "title_en": "Missing Part Finder",
+      "title_ua": "Пошук деталей",
+      "desc_en": "Connect with BrickLink and LEGO Shop to find exactly what you need.",
+      "desc_ua": "Зв'язок з BrickLink та LEGO Shop для пошуку необхідних елементів.",
+      "url": "/parts/",
+      "status_en": "Coming Soon",
+      "status_ua": "Незабаром",
+      "is_active": false
+    }
+  ]
+}
