@@ -21,11 +21,11 @@
         .container { max-width: 1100px; margin: -50px auto 60px; padding: 0 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         
-        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: all 0.3s ease; border-top: 6px solid transparent; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: all 0.3s ease; border-top: 6px solid transparent; display: flex; flex-direction: column; position: relative; overflow: hidden; height: 100%; box-sizing: border-box; }
         .card:hover { transform: translateY(-10px); border-top-color: var(--red); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         .card h3 { margin: 0 0 12px 0; font-size: 1.5rem; }
         .card p { font-size: 1rem; color: #555; flex-grow: 1; margin-bottom: 20px; }
-        .status { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--red); padding: 4px 0; border-top: 1px solid #eee; }
+        .status { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--red); padding: 4px 0; border-top: 1px solid #eee; margin-top: auto; }
 
         .suggestion-box { background: white; border: 2px dashed #ccc; padding: 40px; border-radius: 20px; text-align: center; margin-top: 50px; }
         .btn-suggest { display: inline-block; background: var(--black); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; }
@@ -54,37 +54,19 @@
 </section>
 
 <div class="container">
-    <div class="grid">
-        <a href="/calc/" class="card">
-            <h3 id="c1-t">Bricks-to-Weight</h3>
-            <p id="c1-d">The fastest way to estimate part count in bulk LEGO by weight. No registration required.</p>
-            <span class="status" id="s-online">Live</span>
-        </a>
-
-        <a href="/video/" class="card">
-            <h3 id="c2-t">Video Instructions</h3>
-            <p id="c2-d">Step-by-step building guides and archives. Find instructions by set number.</p>
-            <span class="status" id="s-soon">In Progress</span>
-        </a>
-
-        <a href="/parts/" class="card">
-            <h3 id="c3-t">Missing Part Finder</h3>
-            <p id="c3-d">Connect with BrickLink and LEGO Shop to find exactly what you need.</p>
-            <span class="status" id="s-soon2">Coming Soon</span>
-        </a>
-    </div>
+    <div class="grid" id="project-grid"></div>
 
     <div class="suggestion-box">
         <h3 id="f-title">💡 Have an idea?</h3>
         <p id="f-desc">Tell us what LEGO tool we should build next. We listen to our community!</p>
-        <a href="ТУТ_ВАШЕ_ПОСИЛАННЯ_НА_GOOGLE_ФОРМУ" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
+        <a href="#" target="_blank" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
     </div>
 </div>
 
 <div class="support-section">
     <h3 id="sup-t">Support the Project</h3>
     <p id="sup-d">Bricks-Repo is free and community-funded. Your support keeps us online!</p>
-    <a href="https://buymeacoffee.com/YOUR_USER" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee / Patreon</a>
+    <a href="#" target="_blank" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee / Patreon</a>
 </div>
 
 <footer>
@@ -96,13 +78,6 @@
         en: {
             'h-title': "Bricks-Repo Hub",
             'h-subtitle': "Professional tools and digital archives for LEGO® enthusiasts.",
-            'c1-t': "Bricks-to-Weight",
-            'c1-d': "The fastest way to estimate part count in bulk LEGO by weight. No registration required.",
-            'c2-t': "Video Instructions",
-            'c2-d': "Step-by-step building guides and archives. Find instructions by set number.",
-            'c3-t': "Missing Part Finder",
-            'c3-d': "Connect with BrickLink and LEGO Shop to find exactly what you need.",
-            's-online': "Live", 's-soon': "In Progress", 's-soon2': "Coming Soon",
             'f-title': "💡 Have an idea?",
             'f-desc': "Tell us what LEGO tool we should build next. We listen to our community!",
             'btn-suggest': "Send Suggestion",
@@ -113,13 +88,6 @@
         ua: {
             'h-title': "Хаб Bricks-Repo",
             'h-subtitle': "Професійні інструменти та цифрові архіви для фанатів LEGO®.",
-            'c1-t': "Калькулятор ваги",
-            'c1-d': "Найшвидший спосіб оцінити кількість деталей за вагою. Без реєстрації.",
-            'c2-t': "Відео-інструкції",
-            'c2-d': "Покрокові гайди та архіви. Пошук інструкцій за номером набору.",
-            'c3-t': "Пошук деталей",
-            'c3-d': "Зв'язок з BrickLink та LEGO Shop для пошуку необхідних елементів.",
-            's-online': "Працює", 's-soon': "В розробці", 's-soon2': "Незабаром",
             'f-title': "💡 Маєте ідею?",
             'f-desc': "Напишіть нам, який інструмент створити наступним. Ми слухаємо спільноту!",
             'btn-suggest': "Надіслати пропозицію",
@@ -129,16 +97,69 @@
         }
     };
 
+    let currentLang = localStorage.getItem('bricks_lang') || (navigator.language.includes('uk') ? 'ua' : 'en');
+    const grid = document.getElementById('project-grid');
+
+    async function loadHub() {
+        try {
+            const response = await fetch('hub-registry.json');
+            const data = await response.json();
+            
+            // Динамічне налаштування посилань із секції settings у JSON
+            const suggestBtn = document.getElementById('btn-suggest');
+            const supportBtn = document.getElementById('btn-support');
+
+            if (data.settings) {
+                if (suggestBtn && data.settings.suggestion_url) {
+                    suggestBtn.href = data.settings.suggestion_url;
+                }
+                if (supportBtn && data.settings.support_url) {
+                    supportBtn.href = data.settings.support_url;
+                }
+            }
+
+            renderCards(data.projects);
+        } catch (e) {
+            console.error("Error loading hub data:", e);
+            grid.innerHTML = "<p>Please ensure hub-registry.json is present and correctly formatted.</p>";
+        }
+    }
+
+    function renderCards(projects) {
+        grid.innerHTML = ''; 
+        projects.forEach(p => {
+            if (p.is_active === false) return;
+
+            const title = currentLang === 'ua' ? p.title_ua : p.title_en;
+            const desc = currentLang === 'ua' ? p.desc_ua : p.desc_en;
+            const status = currentLang === 'ua' ? p.status_ua : p.status_en;
+            
+            const card = document.createElement('a');
+            card.href = p.url;
+            card.className = 'card';
+            card.innerHTML = `
+                <h3>${title}</h3>
+                <p>${desc}</p>
+                <span class="status">${status}</span>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
     function setLang(lang) {
+        currentLang = lang;
+        localStorage.setItem('bricks_lang', lang);
+        
         for (let id in i18n[lang]) {
             const el = document.getElementById(id);
             if (el) el.innerText = i18n[lang][id];
         }
-        localStorage.setItem('bricks_lang', lang);
+        
+        loadHub(); 
     }
 
-    const savedLang = localStorage.getItem('bricks_lang') || (navigator.language.includes('uk') ? 'ua' : 'en');
-    setLang(savedLang);
+    // Запуск при завантаженні
+    setLang(currentLang);
 </script>
 
 </body>
