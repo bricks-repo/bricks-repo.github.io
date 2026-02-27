@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bricks-repo.github.io/bricks-repo.github.io/sitemap.xml
