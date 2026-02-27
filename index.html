@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bricks-Repo | Hub</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧱</text></svg>">
+    
+    <script src="config.bricks.js"></script>
+
     <style>
-        :root { --red: #e3000b; --black: #111; --white: #fff; --gray: #f4f4f4; --yellow: #ffdd00; }
+        :root { 
+            --red: #e3000b; 
+            --black: #111; 
+            --white: #fff; 
+            --gray: #f4f4f4; 
+            --yellow: #ffdd00; 
+        }
         body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--gray); color: var(--black); line-height: 1.6; }
         
         header { background: var(--black); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
@@ -58,15 +66,15 @@
 
     <div class="suggestion-box">
         <h3 id="f-title">💡 Have an idea?</h3>
-        <p id="f-desc">Tell us what LEGO tool we should build next. We listen to our community!</p>
+        <p id="f-desc">Tell us what LEGO tool we should build next.</p>
         <a href="#" target="_blank" class="btn-suggest" id="btn-suggest">Send Suggestion</a>
     </div>
 </div>
 
 <div class="support-section">
     <h3 id="sup-t">Support the Project</h3>
-    <p id="sup-d">Bricks-Repo is free and community-funded. Your support keeps us online!</p>
-    <a href="#" target="_blank" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee / Patreon</a>
+    <p id="sup-d">Bricks-Repo is free and community-funded.</p>
+    <a href="#" target="_blank" class="btn-coffee" id="btn-support">☕ Buy Me a Coffee</a>
 </div>
 
 <footer>
@@ -74,6 +82,29 @@
 </footer>
 
 <script>
+    /** * 1. Глобальні налаштування з CONFIG
+     * Встановлюємо Favicon та посилання з центрального файлу конфігурації
+     */
+    function initGlobalSettings() {
+        if (typeof CONFIG !== 'undefined') {
+            // Встановлення Favicon
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${CONFIG.style.favicon}</text></svg>`;
+            document.head.appendChild(link);
+
+            // Встановлення системних посилань (Affiliate/Support)
+            const suggestBtn = document.getElementById('btn-suggest');
+            const supportBtn = document.getElementById('btn-support');
+            if (suggestBtn) suggestBtn.href = CONFIG.suggestion_url;
+            if (supportBtn) supportBtn.href = CONFIG.support_url;
+            
+            console.log(`[ProfitRepo] Branch: ${CONFIG.branch} v.${CONFIG.version} loaded.`);
+        } else {
+            console.warn("[ProfitRepo] config.bricks.js not found. Using defaults.");
+        }
+    }
+
     const i18n = {
         en: {
             'h-title': "Bricks-Repo Hub",
@@ -100,34 +131,26 @@
     let currentLang = localStorage.getItem('bricks_lang') || (navigator.language.includes('uk') ? 'ua' : 'en');
     const grid = document.getElementById('project-grid');
 
+    /** * 2. Завантаження проектів з локального реєстру
+     */
     async function loadHub() {
         try {
             const response = await fetch('hub-registry.json');
+            if (!response.ok) throw new Error("Registry file missing");
             const data = await response.json();
-            
-            // Динамічне налаштування посилань із секції settings у JSON
-            const suggestBtn = document.getElementById('btn-suggest');
-            const supportBtn = document.getElementById('btn-support');
-
-            if (data.settings) {
-                if (suggestBtn && data.settings.suggestion_url) {
-                    suggestBtn.href = data.settings.suggestion_url;
-                }
-                if (supportBtn && data.settings.support_url) {
-                    supportBtn.href = data.settings.support_url;
-                }
-            }
-
             renderCards(data.projects);
         } catch (e) {
-            console.error("Error loading hub data:", e);
-            grid.innerHTML = "<p>Please ensure hub-registry.json is present and correctly formatted.</p>";
+            console.error("Error loading registry:", e);
+            grid.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>Registry offline. Check hub-registry.json</p>";
         }
     }
 
+    /** * 3. Рендеринг карток проектів
+     */
     function renderCards(projects) {
         grid.innerHTML = ''; 
         projects.forEach(p => {
+            // Відображаємо лише активні проекти (is_active: true)
             if (p.is_active === false) return;
 
             const title = currentLang === 'ua' ? p.title_ua : p.title_en;
@@ -146,19 +169,24 @@
         });
     }
 
+    /** * 4. Зміна мови (i18n)
+     */
     function setLang(lang) {
         currentLang = lang;
         localStorage.setItem('bricks_lang', lang);
         
+        // Оновлення статичних текстів
         for (let id in i18n[lang]) {
             const el = document.getElementById(id);
             if (el) el.innerText = i18n[lang][id];
         }
         
+        // Оновлення карток (якщо реєстр завантажений)
         loadHub(); 
     }
 
-    // Запуск при завантаженні
+    // Старт
+    initGlobalSettings();
     setLang(currentLang);
 </script>
 
