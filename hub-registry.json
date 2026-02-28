@@ -2,13 +2,13 @@
   "projects": [
     {
       "id": "c1",
-      "title_en": "Bricks-to-Weight",
-      "title_ua": "Калькулятор ваги",
+      "title_en": "Weight-to-bricks Calculator",
+      "title_ua": "Калькулятор для переведення ваги в кількість деталей ЛЕГО",
       "desc_en": "The fastest way to estimate part count in bulk LEGO by weight. No registration required.",
       "desc_ua": "Найшвидший спосіб оцінити кількість деталей за вагою. Без реєстрації.",
-      "url": "/calc/",
+      "url": "/weight-to-bricks-calculator/",
       "status_en": "Live",
-      "status_ua": "Працює",
+      "status_ua": "Активно використовується",
       "is_active": true
     },
     {
