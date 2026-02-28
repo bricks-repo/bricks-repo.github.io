@@ -10,6 +10,8 @@
       "status_en": "Live",
       "status_ua": "Активно використовується",
       "is_active": true
+      "google_search_console": true
+      "bing_webmater_tools": true
     },
     {
       "id": "c2",
